@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: create and push an image
+        run: |
+          chmod +x ./build.sh
+          sudo ./build.sh "5.0.$GITHUB_RUN_NUMBER" ${{ secrets.REGISTRY_USERNAME }} ${{ secrets.REGISTRY_TOKEN }}
+         
+  
